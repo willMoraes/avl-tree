@@ -71,7 +71,7 @@ public class BinarySearchThreeTest {
     searchThree.insert(50);
     searchThree.remove(50);
 
-    if (searchThree.printInOrder().equals("")) {
+    if (searchThree.printInOrder().isEmpty()) {
       successMessage("Elemento removido com sucesso");
     } else {
       errorMessage("Erro ao remover elemento");
