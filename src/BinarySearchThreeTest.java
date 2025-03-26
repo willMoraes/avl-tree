@@ -85,6 +85,8 @@ public class BinarySearchThreeTest {
       successMessage("Elemento 20 removido com sucesso");
     } else {
       errorMessage("Erro ao remover elemento 20");
+      System.out.println("expected: " + "2 5 9 10 12 15 16 17 25 30 33 50 60 70" );
+      System.out.println("received: " + searchThree.printInOrder());
     }
 
     searchThree.remove(5);

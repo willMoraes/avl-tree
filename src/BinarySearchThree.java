@@ -45,80 +45,47 @@ public class BinarySearchThree {
   }
 
   public void remove(int value) {
-    this.remove(value, root, null, true);
+    this.remove(value, root);
   }
 
-  private void remove(int value, Nodo current, Nodo prev, boolean isInLeft) {
-    // se o atual ainda não for o que deve ser removido
-    // chama novamente o metodo recursivamente
-    // verificaddo a direção que deve continuar buscando
-
-    if (value != current.getValue()) {
-      if (value > current.getValue()) {
-        this.remove(value, current.getRight(), current, false);
-      }
-
-      else {
-        this.remove(value, current.getLeft(), current, true);
-      }
-
-      return;
+  private Nodo remove(int value, Nodo current) {
+    if (current == null) {
+      return null;
     }
 
-    // se for a ser removido for uma folha
-    if (current.getLeft() == null && current.getRight() == null) {
-      if (current == root) {
-        root = null;
-      }
-
-      else if (isInLeft) {
-        prev.setLeft(null);
-      }
-
-      else prev.setRight(null);
+    else if (current.getValue() > value) {
+      current.setLeft(remove(value, current.getLeft()));
+    } else if (current.getValue() < value) {
+      current.setRight(remove(value, current.getRight()));
     }
 
-    // se o nó a ser removido só possua filho na direita
-    else if (current.getLeft() == null & current.getRight() != null) {
-      if (root == current) {
-        root = current.getRight();
-      }
-      else if (isInLeft) {
-        prev.setLeft(current.getRight());
-      }
-      else prev.setRight(current.getRight());
+    // Podem haver 3 cenários:
+    // a. node é uma folha
+    // b. node tem somente um filho
+    // c. node tem dois filhos
+
+    // cenário a
+    else if (current.getLeft() == null && current.getRight() == null) {
+      if (current.getValue() == root.getValue()) root = null;
+      current = null;
     }
 
-    // se o nó a ser removido só possua filho na esquerda
-    else if (current.getRight() == null & current.getLeft() != null) {
-      if (root == current) {
-        root = current.getLeft();
-      }
-      else if (isInLeft) {
-        prev.setLeft(current.getLeft());
-      }
-      else prev.setRight(current.getLeft());
+    // cenário b
+    else if (current.getRight() == null) {
+      current = current.getLeft();
     }
 
-    // se o nó a ser removido possui ambos filhos
+    else if (current.getLeft() == null) {
+      current = current.getRight();
+    }
+
+    // cenário c
     else {
-      // Pega o maior elemento da subárvore a esquerda
-      // e remove ele da sua posição original
       Nodo substitute = getSubstitute(current);
-
-      if (root == current) {
-        root = substitute;
-      }
-      else if (isInLeft) {
-        prev.setLeft(substitute);
-      }
-      else {
-        prev.setRight(substitute);
-      }
-
-      substitute.setLeft(current.getLeft());
-      substitute.setRight(current.getRight());
+      current.setValue(substitute.getValue());
     }
+
+    return current;
   }
 
   private Nodo getSubstitute(Nodo toRemove) {
@@ -140,13 +107,13 @@ public class BinarySearchThree {
   }
 
   public String printInOrder() {
-    return recursivePrintInOrder(root);
+    return this.printInOrder(root);
   }
 
-  private String recursivePrintInOrder(Nodo current) {
+  private String printInOrder(Nodo current) {
     if (current == null) return "";
 
-    return recursivePrintInOrder(current.getLeft()) + current.getValue() + " " + recursivePrintInOrder(current.getRight());
+    return this.printInOrder(current.getLeft()) + current.getValue() + " " + this.printInOrder(current.getRight());
   }
 
   public void clean() {
