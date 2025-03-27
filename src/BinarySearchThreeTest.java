@@ -202,10 +202,21 @@ public class BinarySearchThreeTest {
     }
   }
 
+  public static void testPrints() {
+    BinarySearchThree searchThree = new BinarySearchThree();
+
+    resetThree(searchThree);
+
+    System.out.println("In Order: " + searchThree.printInOrder());
+    System.out.println("Pre Order: " + searchThree.printPreOrder());
+    System.out.println("Post Order: " + searchThree.printPostOrder());
+  }
+
   public static void main(String[] args) {
     testInsert();
     testSearch();
     testReset();
     testRemove();
+    testPrints();
   }
 }

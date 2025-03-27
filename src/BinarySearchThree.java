@@ -1,7 +1,7 @@
 public class BinarySearchThree {
   Nodo root = null;
 
-  public void insert(int value) {
+  void insert(int value) {
     if (root == null) root = new Nodo(value);
     else this.insert(value, this.root);
   }
@@ -22,7 +22,7 @@ public class BinarySearchThree {
     return current;
   }
 
-  public Nodo search(int value) {
+  Nodo search(int value) {
     return this.search(value, root);
   }
 
@@ -44,7 +44,7 @@ public class BinarySearchThree {
     }
   }
 
-  public void remove(int value) {
+  void remove(int value) {
     this.remove(value, root);
   }
 
@@ -106,7 +106,7 @@ public class BinarySearchThree {
     return current;
   }
 
-  public String printInOrder() {
+  String printInOrder() {
     return this.printInOrder(root);
   }
 
@@ -116,7 +116,27 @@ public class BinarySearchThree {
     return this.printInOrder(current.getLeft()) + current.getValue() + " " + this.printInOrder(current.getRight());
   }
 
-  public void clean() {
+  String printPreOrder() {
+    return this.printPreOrder(root);
+  }
+
+  private String printPreOrder(Nodo current) {
+    if (current == null) return "";
+
+    return current.getValue() + " " + this.printPreOrder(current.getLeft()) + this.printPreOrder(current.getRight());
+  }
+
+  String printPostOrder() {
+    return this.printPostOrder(root);
+  }
+
+  private String printPostOrder(Nodo current) {
+    if (current == null) return "";
+
+    return this.printPostOrder(current.getLeft()) + this.printPostOrder(current.getRight()) + current.getValue() + " ";
+  }
+
+  void clean() {
     this.root = null;
   }
 }
