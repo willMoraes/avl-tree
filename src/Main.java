@@ -20,7 +20,7 @@ class InstructionHandler {
     System.out.println("Para buscar o valor 5, digite: b 5");
     System.out.println("Para encerrar o programa, digite: stop");
     System.out.println();
-    System.out.println("*Lembre-se de adicionar um espaço em branco entre a instrução e o valor.");;
+    System.out.println("*Lembre-se de adicionar um espaço em branco entre a instrução e o valor.");
     System.out.println();
     System.out.println("======================================");
     System.out.println();
@@ -86,7 +86,6 @@ public class Main {
           System.out.println("Post Order: " + tree.printPostOrder());
           return;
         case "stop":
-          operation = "stop";
           return;
         default:
           System.out.println("Operação inválida, tente novamente!");
