@@ -1,9 +1,20 @@
+import static java.lang.Math.max;
+
 public class BinarySearchThree {
   Nodo root = null;
 
   void insert(int value) {
-    if (root == null) root = new Nodo(value);
-    else this.insert(value, this.root);
+    Nodo node = null;
+
+    if (root == null) {
+      root = new Nodo(value);
+      node = root;
+    } else {
+      node = this.insert(value, this.root);
+    };
+
+    updateHeight(node);
+    rebalance(node);
   }
 
   private Nodo insert(int value, Nodo current) {
@@ -45,7 +56,9 @@ public class BinarySearchThree {
   }
 
   void remove(int value) {
-    this.remove(value, root);
+    Nodo node = this.remove(value, root);
+    updateHeight(node);
+    rebalance(node);
   }
 
   private Nodo remove(int value, Nodo current) {
@@ -138,5 +151,64 @@ public class BinarySearchThree {
 
   void clean() {
     this.root = null;
+  }
+
+  private Nodo rotateRight(Nodo node) {
+    Nodo leftChild = node.getLeft();
+
+    node.setLeft(leftChild.getRight());
+    leftChild.setRight(node);
+
+    return leftChild;
+  }
+
+  private Nodo rotateLeft(Nodo node) {
+    Nodo rightChild = node.getRight();
+
+    node.setRight(rightChild.getLeft());
+    rightChild.setLeft(node);
+
+    return rightChild;
+  }
+
+  private int height(Nodo node) {
+    return (node != null) ? node.getHeight() : -1;
+  }
+
+  private void updateHeight(Nodo node) {
+    int leftHeight = node.getLeft() != null ? node.getLeft().getHeight() : -1;
+    int rightHeight = node.getRight() != null ? node.getRight().getHeight() : -1;
+
+    node.setHeight(max(rightHeight, leftHeight) + 1);
+  }
+
+  public int balanceFactor(Nodo node) {
+    return height(node.getRight()) - height(node.getLeft());
+  }
+
+  private Nodo rebalance(Nodo node) {
+    int bf = balanceFactor(node);
+    Nodo left = node.getLeft();
+    Nodo right = node.getRight();
+
+    if (bf < -1 ) {
+      if (balanceFactor(left) <= 0) {
+        node = rotateRight(node);
+      } else {
+        node.setLeft(rotateLeft(left));
+        node = rotateRight(node);
+      }
+    }
+
+    if (bf > 1) {
+      if (balanceFactor(right) >= 0) {
+        node = rotateLeft(node);
+      } else {
+        node.setRight(rotateRight(right));
+        node = rotateLeft(node);
+      }
+    }
+
+    return node;
   }
 }
