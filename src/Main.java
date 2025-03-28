@@ -31,66 +31,88 @@ class InstructionHandler {
 public class Main {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-    InstructionHandler InstructionHandler = new InstructionHandler();
-    BinarySearchThree tree = new BinarySearchThree();
+    BinarySearchThree arvore = new BinarySearchThree();
 
-    InstructionHandler.print();
+    System.out.println("Bem-vindo ao Menu de Árvore Binária!");
+    System.out.println("Comandos disponíveis:");
+    System.out.println("i {int} - Inserir valor");
+    System.out.println("r {int} - Remover valor");
+    System.out.println("b {int} - Buscar valor");
+    System.out.println("pre - Listar em pré-ordem");
+    System.out.println("pos - Listar em pós-ordem");
+    System.out.println("em - Listar em ordem");
+    System.out.println("stop - Encerrar programa");
 
-    while ( scanner.hasNext() ) {
-      String operation = "";
-      int value = 0;
+    while (true) {
+      System.out.print("\nDigite um comando: ");
+      String entrada = scanner.nextLine().trim();
 
       try {
-        operation = scanner.next();
-        value = scanner.nextInt();
-      } catch (Exception e) {
-        System.out.println("Operação inválida, tente novamente!");
-      }
+        String[] partes = entrada.split(" ");
 
-      switch ( operation ) {
-        case "i":
-          try {
-            Integer.parseInt(String.valueOf(value));
-          } catch (NumberFormatException e) {
-            System.out.println("Valor inválido");
+        switch (partes[0]) {
+          case "i":
+            if (partes.length != 2) {
+              throw new IllegalArgumentException("Comando 'i' requer um valor inteiro.");
+            }
+            int valorInserir = Integer.parseInt(partes[1]);
+            arvore.insert(valorInserir);
+            System.out.println("Valor " + valorInserir + " inserido.");
             break;
-          }
 
-          System.out.println("Inserindo " + value);
-          tree.insert(value);
-          System.out.println("Valor inserido com sucesso!");
-          System.out.println("In Order: " + tree.printInOrder());
-          break;
-        case "r":
-          try {
-            Integer.parseInt(String.valueOf(value));
-          } catch (NumberFormatException e) {
-            System.out.println("Valor inválido");
+          case "r":
+            if (partes.length != 2) {
+              throw new IllegalArgumentException("Comando 'r' requer um valor inteiro.");
+            }
+            int valorRemover = Integer.parseInt(partes[1]);
+            arvore.remove(valorRemover);
+            System.out.println("Valor " + valorRemover + " removido.");
             break;
-          }
 
-          System.out.println("Removendo " + value);
-          tree.remove(value);
-          System.out.println("Valor removido com sucesso!");
-          System.out.println("In Order: " + tree.printInOrder());
-          break;
-        case "b":
-          System.out.println("Buscando " + value);
-          System.out.println(tree.search(value) != null ? "Valor encontrado!" : "Não encontrado!");
-          break;
-        case "pre":
-          System.out.println("Pre Order: " + tree.printPreOrder());
-        case "em":
-          System.out.println("In Order: " + tree.printInOrder());
-        case "pos":
-          System.out.println("Post Order: " + tree.printPostOrder());
-          return;
-        case "stop":
-          return;
-        default:
-          System.out.println("Operação inválida, tente novamente!");
+          case "b":
+            if (partes.length != 2) {
+              throw new IllegalArgumentException("Comando 'b' requer um valor inteiro.");
+            }
+            int valorBuscar = Integer.parseInt(partes[1]);
+            Nodo encontrado = arvore.search(valorBuscar);
+
+            if (encontrado != null) {
+              System.out.println("Valor " + valorBuscar + " encontrado");
+            } else {
+              System.out.println("Valor " + valorBuscar + " não encontrado");
+            }
+            break;
+
+          case "pre":
+            System.out.print("Árvore em pré-ordem: ");
+            System.out.println(arvore.printPreOrder());
+            break;
+
+          case "pos":
+            System.out.print("Árvore em pós-ordem: ");
+            System.out.println(arvore.printPostOrder());
+
+            break;
+
+          case "em":
+            System.out.print("Árvore em ordem: ");
+            System.out.println(arvore.printInOrder());
+
+            break;
+
+          case "stop":
+            System.out.println("Encerrando o programa...");
+            scanner.close();
+            System.exit(0);
+
+          default:
+            System.out.println("Comando inválido. Tente novamente.");
+        }
+      } catch (NumberFormatException e) {
+        System.out.println("Erro: Valor inválido. Certifique-se de usar um número inteiro.");
+      } catch (IllegalArgumentException e) {
+        System.out.println("Erro: " + e.getMessage());
       }
     }
-    scanner.close();
   }
 }
