@@ -13,7 +13,7 @@ O algoritmo foi implementado em Java e possui as seguintes funcionalidades:
 - Impressão da árvore em ordem
 - Impressão da árvore em pós-ordem
 
-O algoritmo foi testado com os seguintes casos de teste, que foram salvos no arquivo AvlTreeTest.java
+O algoritmo foi testado com os seguintes casos de teste, que foram salvos no arquivo [AvlTreeTest.java](https://github.com/willMoraes/avl-tree/blob/main/src/AvlTreeTest.java)
 
 - Inserção de 15 elementos
 - Remoção de 10 elementos
@@ -23,4 +23,4 @@ O algoritmo foi testado com os seguintes casos de teste, que foram salvos no arq
 - Impressão da árvore em pós-ordem
 
 
-  _Para executar os testes basta rodar o arquivo AvlTreeTest.java_
+  _Para executar os testes basta rodar o arquivo [AvlTreeTest.java](https://github.com/willMoraes/avl-tree/blob/main/src/AvlTreeTest.java)_
