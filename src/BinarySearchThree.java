@@ -1,20 +1,27 @@
-import static java.lang.Math.max;
-
 public class BinarySearchThree {
   Nodo root = null;
 
+  private int height(Nodo node) {
+    return (node != null) ? node.getHeight() : -1;
+  }
+
+  private void updateHeight(Nodo node) {
+    if (node != null) {
+      // max pega o maior valor inteiro entre dois inteiros
+      node.setHeight(Math.max(height(node.getRight()), height(node.getLeft())) + 1);
+    }
+  }
+
+  public int balanceFactor(Nodo node) {
+    if (node == null) {
+      return 0;
+    }
+
+    return height(node.getRight()) - height(node.getLeft());
+  }
+
   void insert(int value) {
-    Nodo node = null;
-
-    if (root == null) {
-      root = new Nodo(value);
-      node = root;
-    } else {
-      node = this.insert(value, this.root);
-    };
-
-    updateHeight(node);
-    rebalance(node);
+    root = this.insert(value, this.root);
   }
 
   private Nodo insert(int value, Nodo current) {
@@ -30,7 +37,9 @@ public class BinarySearchThree {
       return current;
     }
 
-    return current;
+    updateHeight(current);
+
+    return rebalance(current);
   }
 
   Nodo search(int value) {
@@ -56,17 +65,16 @@ public class BinarySearchThree {
   }
 
   void remove(int value) {
-    Nodo node = this.remove(value, root);
-    updateHeight(node);
-    rebalance(node);
+    root = this.remove(value, root);
   }
 
   private Nodo remove(int value, Nodo current) {
     if (current == null) {
-      return null;
+      return current;
     }
 
-    else if (current.getValue() > value) {
+    // navega recursivamente até encontrar o elemento que será excluído
+    if (current.getValue() > value) {
       current.setLeft(remove(value, current.getLeft()));
     } else if (current.getValue() < value) {
       current.setRight(remove(value, current.getRight()));
@@ -98,9 +106,12 @@ public class BinarySearchThree {
       current.setValue(substitute.getValue());
     }
 
-    return current;
+    updateHeight(current);
+    return rebalance(current);
   }
 
+  // encontra o valor mais a direita da subárvore esquerda de toRemove
+  // apos encontrá-lo, remove esse valor de sua posição original
   private Nodo getSubstitute(Nodo toRemove) {
     Nodo current = toRemove.getLeft();
     Nodo prev = toRemove;
@@ -159,6 +170,9 @@ public class BinarySearchThree {
     node.setLeft(leftChild.getRight());
     leftChild.setRight(node);
 
+    updateHeight(node);
+    updateHeight(leftChild);
+
     return leftChild;
   }
 
@@ -168,25 +182,17 @@ public class BinarySearchThree {
     node.setRight(rightChild.getLeft());
     rightChild.setLeft(node);
 
+    updateHeight(node);
+    updateHeight(rightChild);
+
     return rightChild;
   }
 
-  private int height(Nodo node) {
-    return (node != null) ? node.getHeight() : -1;
-  }
-
-  private void updateHeight(Nodo node) {
-    int leftHeight = node.getLeft() != null ? node.getLeft().getHeight() : -1;
-    int rightHeight = node.getRight() != null ? node.getRight().getHeight() : -1;
-
-    node.setHeight(max(rightHeight, leftHeight) + 1);
-  }
-
-  public int balanceFactor(Nodo node) {
-    return height(node.getRight()) - height(node.getLeft());
-  }
-
   private Nodo rebalance(Nodo node) {
+    if (node == null) {
+      return node;
+    }
+
     int bf = balanceFactor(node);
     Nodo left = node.getLeft();
     Nodo right = node.getRight();
