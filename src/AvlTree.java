@@ -1,4 +1,4 @@
-public class BinarySearchThree {
+public class AvlTree {
   Nodo root = null;
 
   private int height(Nodo node) {
@@ -48,12 +48,12 @@ public class BinarySearchThree {
 
   private Nodo search(int value, Nodo current) {
     if (current == null) {
-      System.out.println(" ");
+      System.out.print(" ");
       return null;
     }
 
     if (value == current.getValue()) {
-      System.out.println(" " + value);
+      System.out.print(" " + current.getValue());
       return current;
     } else if (value > current.getValue()) {
       System.out.print(" " + current.getValue());

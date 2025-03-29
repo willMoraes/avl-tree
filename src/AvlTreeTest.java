@@ -1,4 +1,4 @@
-public class BinarySearchThreeTest {
+public class AvlTreeTest {
   public static void successMessage(String message) {
       System.out.println("\u001B[32m" + message + "\u001B[0m");
   }
@@ -7,7 +7,7 @@ public class BinarySearchThreeTest {
       System.out.println("\u001B[31m" + message + "\u001B[0m");
   }
 
-  public static void resetThree(BinarySearchThree searchThree) {
+  public static void resetThree(AvlTree searchThree) {
     searchThree.clean();
 
     searchThree.insert(50);
@@ -28,7 +28,7 @@ public class BinarySearchThreeTest {
   }
 
   public static void testReset() {
-    BinarySearchThree searchThree = new BinarySearchThree();
+    AvlTree searchThree = new AvlTree();
 
     resetThree(searchThree);
 
@@ -40,7 +40,7 @@ public class BinarySearchThreeTest {
   }
 
   public static void testInsert() {
-    BinarySearchThree searchThree = new BinarySearchThree();
+    AvlTree searchThree = new AvlTree();
 
     searchThree.insert(50);
     searchThree.insert(20);
@@ -66,7 +66,7 @@ public class BinarySearchThreeTest {
   }
 
   public static void testRemove() {
-    BinarySearchThree searchThree = new BinarySearchThree();
+    AvlTree searchThree = new AvlTree();
 
     searchThree.insert(50);
     searchThree.remove(50);
@@ -155,7 +155,7 @@ public class BinarySearchThreeTest {
   }
 
   public static void testSearch() {
-    BinarySearchThree searchThree = new BinarySearchThree();
+    AvlTree searchThree = new AvlTree();
 
     resetThree(searchThree);
 
@@ -203,7 +203,7 @@ public class BinarySearchThreeTest {
   }
 
   public static void testPrints() {
-    BinarySearchThree searchThree = new BinarySearchThree();
+    AvlTree searchThree = new AvlTree();
 
     resetThree(searchThree);
 

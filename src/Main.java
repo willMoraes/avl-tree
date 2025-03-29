@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
-class InstructionHandler {
-  public void print() {
-    System.out.println("Bem vindo ao sistema de árvore binária!");
-    System.out.println("Operações disponíveis: ");
+public class Main {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    AvlTree arvore = new AvlTree();
+
     System.out.println("i - Inserir");
     System.out.println("r - Remover");
     System.out.println("b - Buscar");
@@ -14,34 +15,7 @@ class InstructionHandler {
     System.out.println();
     System.out.println("======================================");
     System.out.println();
-    System.out.println("Exemplo de uso:");
-    System.out.println("Para inserir o valor 5, digite: i 5");
-    System.out.println("Para remover o valor 5, digite: r 5");
-    System.out.println("Para buscar o valor 5, digite: b 5");
-    System.out.println("Para encerrar o programa, digite: stop");
-    System.out.println();
     System.out.println("*Lembre-se de adicionar um espaço em branco entre a instrução e o valor.");
-    System.out.println();
-    System.out.println("======================================");
-    System.out.println();
-    System.out.println("Digite a operação desejada: ");
-  }
-}
-
-public class Main {
-  public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    BinarySearchThree arvore = new BinarySearchThree();
-
-    System.out.println("Bem-vindo ao Menu de Árvore Binária!");
-    System.out.println("Comandos disponíveis:");
-    System.out.println("i {int} - Inserir valor");
-    System.out.println("r {int} - Remover valor");
-    System.out.println("b {int} - Buscar valor");
-    System.out.println("pre - Listar em pré-ordem");
-    System.out.println("pos - Listar em pós-ordem");
-    System.out.println("em - Listar em ordem");
-    System.out.println("stop - Encerrar programa");
 
     while (true) {
       System.out.print("\nDigite um comando: ");
@@ -58,6 +32,7 @@ public class Main {
             int valorInserir = Integer.parseInt(partes[1]);
             arvore.insert(valorInserir);
             System.out.println("Valor " + valorInserir + " inserido.");
+            System.out.println("Árvore em ordem: " + arvore.printInOrder());
             break;
 
           case "r":
@@ -67,6 +42,7 @@ public class Main {
             int valorRemover = Integer.parseInt(partes[1]);
             arvore.remove(valorRemover);
             System.out.println("Valor " + valorRemover + " removido.");
+            System.out.println("Árvore em ordem: " + arvore.printInOrder());
             break;
 
           case "b":
@@ -74,13 +50,18 @@ public class Main {
               throw new IllegalArgumentException("Comando 'b' requer um valor inteiro.");
             }
             int valorBuscar = Integer.parseInt(partes[1]);
+            System.out.println("Caminho percorrido: ");
+
             Nodo encontrado = arvore.search(valorBuscar);
+
+            System.out.println();
 
             if (encontrado != null) {
               System.out.println("Valor " + valorBuscar + " encontrado");
             } else {
               System.out.println("Valor " + valorBuscar + " não encontrado");
             }
+
             break;
 
           case "pre":
